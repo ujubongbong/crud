@@ -8,4 +8,8 @@ public interface PostService {
     PostDto createPost(PostDto postDto);
 
     List<PostDto> getAllPost();
+
+    // 변수 지정
+    // long nullX
+    PostDto detailPostById(long id);
 }

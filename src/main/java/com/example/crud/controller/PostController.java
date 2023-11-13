@@ -27,4 +27,10 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getAllPost(){
         return ResponseEntity.ok(postService.getAllPost());
     }
+
+    // id값은 가변값이라 가능
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> detailPostById(@PathVariable(name = "id") long id){
+        return ResponseEntity.ok(postService.detailPostById(id));
+    }
 }

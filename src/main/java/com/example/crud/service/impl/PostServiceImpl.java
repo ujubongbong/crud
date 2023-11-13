@@ -6,6 +6,7 @@ import com.example.crud.repository.PostRepository;
 import com.example.crud.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.swing.event.ListDataEvent;
 import java.util.List;
@@ -38,5 +39,14 @@ public class PostServiceImpl implements PostService {
         // stream 공부
         // stream 안에 map 사용, map으로 하나씩 바꿔줌
         return posts.stream().map((post)-> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+    }
+
+    //
+    @Override
+    public PostDto detailPostById(long id){
+        // id값이 없을 때 예외 처리(repository)
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        return modelMapper.map(post, PostDto.class);
     }
 }
