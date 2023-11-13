@@ -7,6 +7,10 @@ import com.example.crud.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.swing.event.ListDataEvent;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
@@ -23,5 +27,16 @@ public class PostServiceImpl implements PostService {
         Post savePost = postRepository.save(post);
 
         return modelMapper.map(savePost, PostDto.class);
+    }
+
+    @Override
+    // 엔티티에 있는 값 다 가져옴
+    // List 저장공간
+    public List<PostDto> getAllPost() {
+        // db 필드를 가져와서 엔티티 접근, post 엔티티 참조 -> list에 담음
+        List<Post> posts = postRepository.findAll();
+        // stream 공부
+        // stream 안에 map 사용, map으로 하나씩 바꿔줌
+        return posts.stream().map((post)-> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
 }
